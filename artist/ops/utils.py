@@ -280,8 +280,10 @@ def video_tensor_to_gif(tensor, path, duration = 120, loop = 0, optimize = True)
     tensor = tensor.permute(1,2,3,0)
     images = tensor.unbind(dim = 0)
     images = [(image.numpy()*255).astype('uint8') for image in images]
-    imageio.mimwrite(path, images, fps=8)
-    return images
+    # imageio.mimwrite(path, images, fps=8)
+    # return images
+    imageio.mimsave(path, images, 'GIF', duration = duration)
+    return path
 
 @torch.no_grad()
 def save_video(bucket, oss_key, tensor, mean=[0.5,0.5,0.5],std=[0.5,0.5,0.5],nrow=8, retry=5):
